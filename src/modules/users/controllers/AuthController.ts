@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { SignUpDto } from "../dto/SignUpDto";
-import SignUpService from "../services/SignUpService";
-import ISignUpResponse from '../interfaces/ISignUpResponse';
+import SignInService from "../services/SignInService";
+import ISignInResponse from '../interfaces/ISignInResponse';
 
 export default class AuthController {
   public async signUp(request: Request, response: Response): Promise<Response> {
@@ -11,10 +11,10 @@ export default class AuthController {
       email, password
     }
 
-    const signUp = new SignUpService();
+    const signIn = new SignInService();
 
-    const signUpResponse: ISignUpResponse = await signUp.execute(signUpDto);
+    const signInResponse: ISignInResponse = await signIn.execute(signUpDto);
 
-    return response.json(signUpResponse);
+    return response.json(signInResponse);
   }
 }
