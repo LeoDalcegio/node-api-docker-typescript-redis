@@ -17,6 +17,10 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
+    "typeRoots": [
+      "@types",
+      "./node_modules/@types"
+    ],
     "baseUrl": "./",
     "paths": {
       "@config/*": [

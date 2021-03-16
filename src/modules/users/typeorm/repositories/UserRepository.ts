@@ -7,7 +7,7 @@ class UserRepository extends Repository<User> {
     const user = await this.findOne({
       where: {
         name,
-      }
+      },
     });
 
     return user;
@@ -17,7 +17,7 @@ class UserRepository extends Repository<User> {
     const user = await this.findOne({
       where: {
         email,
-      }
+      },
     });
 
     return user;

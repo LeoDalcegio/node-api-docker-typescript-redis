@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - '5432:5432'
+    volumes:
+      - database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'pass123'
+      POSTGRES_DB: 'apivendas'
+
+volumes:
+  database:

@@ -1,17 +1,17 @@
-import { Request, Response } from "express";
-import { CreateProductDto } from "../dto/CreateProductDto";
-import { UpdateProductDto } from "../dto/UpdateProductDto";
-import CreateProductService from "../services/CreateProductService";
-import DeleteProductService from "../services/DeleteProductService";
-import ListProductsService from "../services/ListProductsService";
-import ShowProductService from "../services/ShowProductService";
-import UpdateProductService from "../services/UpdateProductService";
+import { Request, Response } from 'express';
+import { CreateProductDto } from '../dto/CreateProductDto';
+import { UpdateProductDto } from '../dto/UpdateProductDto';
+import CreateProductService from '../services/CreateProductService';
+import DeleteProductService from '../services/DeleteProductService';
+import ListProductsService from '../services/ListProductsService';
+import ShowProductService from '../services/ShowProductService';
+import UpdateProductService from '../services/UpdateProductService';
 
 export default class ProductsController {
   public async index(request: Request, response: Response): Promise<Response> {
-    const listProducts = new ListProductsService();
+    const listProductsService = new ListProductsService();
 
-    const products = await listProducts.execute();
+    const products = await listProductsService.execute();
 
     return response.json(products);
   }
@@ -19,9 +19,9 @@ export default class ProductsController {
   public async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const showProduct = new ShowProductService();
+    const showProductService = new ShowProductService();
 
-    const product = await showProduct.execute(id);
+    const product = await showProductService.execute(id);
 
     return response.json(product);
   }
@@ -30,12 +30,14 @@ export default class ProductsController {
     const { name, price, quantity } = request.body;
 
     const createProductDto: CreateProductDto = {
-      name, price, quantity
-    }
+      name,
+      price,
+      quantity,
+    };
 
-    const createProduct = new CreateProductService();
+    const createProductService = new CreateProductService();
 
-    const product = await createProduct.execute(createProductDto);
+    const product = await createProductService.execute(createProductDto);
 
     return response.json(product);
   }
@@ -45,12 +47,14 @@ export default class ProductsController {
     const { id } = request.params;
 
     const updateProductDto: UpdateProductDto = {
-      name, price, quantity
-    }
+      name,
+      price,
+      quantity,
+    };
 
-    const updateProduct = new UpdateProductService();
+    const updateProductService = new UpdateProductService();
 
-    const product = await updateProduct.execute(id, updateProductDto);
+    const product = await updateProductService.execute(id, updateProductDto);
 
     return response.json(product);
   }
@@ -58,9 +62,9 @@ export default class ProductsController {
   public async delete(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const deleteProduct = new DeleteProductService();
+    const deleteProductService = new DeleteProductService();
 
-    await deleteProduct.execute(id);
+    await deleteProductService.execute(id);
 
     return response.json([]);
   }

@@ -6,14 +6,14 @@ const authRouter = Router();
 const authController = new AuthController();
 
 authRouter.post(
-  '/signup',
+  '/signin',
   celebrate({
     [Segments.BODY]: {
       email: Joi.string().email().required(),
       password: Joi.string().required(),
-    }
+    },
   }),
-  authController.signUp
+  authController.signIn,
 );
 
 export default authRouter;
