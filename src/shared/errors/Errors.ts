@@ -1,6 +1,10 @@
 export const PRODUCT_NOT_FOUND = '404000: Product not found';
 export const USER_NOT_FOUND = '404001: User not found';
 export const CUSTOMER_NOT_FOUND = '404002: Customer not found';
+export const PRODUCTS_WITH_IDS_NOT_FOUND =
+  '404003: Product with the given id not found';
+export const QUANTITY_NOT_AVALIABLE = '404004: Quantity is not avaliable';
+export const ORDER_NOT_FOUND = '404005: Order not found';
 
 export const INVALID_CREDENTIALS = '401000: Invalid credentials';
 export const INVALID_TOKEN = '401001: Invalid token';

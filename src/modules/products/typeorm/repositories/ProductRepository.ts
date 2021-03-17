@@ -7,7 +7,7 @@ class ProductRepository extends Repository<Product> {
     const product = await this.findOne({
       where: {
         name,
-      }
+      },
     });
 
     return product;
