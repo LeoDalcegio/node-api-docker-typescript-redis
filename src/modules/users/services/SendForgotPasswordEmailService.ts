@@ -4,7 +4,7 @@ import { getCustomRepository } from 'typeorm';
 import UserRepository from '../typeorm/repositories/UserRepository';
 import { ForgotPasswordDto } from '../dto/ForgotPasswordDto';
 import UserTokenRepository from '../typeorm/repositories/UserTokenRepository';
-import EtherealMail from '@config/mail/EtherealMail';
+import EtherealMail from '@shared/providers/mail/EtherealMail';
 import path from 'path';
 
 class SendForgotPasswordEmailService {
@@ -34,7 +34,7 @@ class SendForgotPasswordEmailService {
         file: forgotPasswordTemplate,
         variables: {
           name: user.name,
-          link: `http://localhost:3000/reset_password?token=${token}`,
+          link: `${process.env.APP_WEB_URL}/reset_password?token=${token}`,
         },
       },
     });

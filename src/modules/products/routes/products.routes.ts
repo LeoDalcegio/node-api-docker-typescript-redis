@@ -1,9 +1,12 @@
 import { Router } from 'express';
 import ProductsController from '../controllers/ProductsController';
 import { celebrate, Joi, Segments } from 'celebrate';
+import isAuthenticated from '@shared/http/middlewares/isAuthenticated';
 
 const productsRouter = Router();
 const productsController = new ProductsController();
+
+productsRouter.use(isAuthenticated);
 
 productsRouter.get('/', productsController.index);
 
@@ -14,7 +17,7 @@ productsRouter.get(
       id: Joi.string().uuid().required(),
     },
   }),
-  productsController.show
+  productsController.show,
 );
 
 productsRouter.post(
@@ -24,9 +27,9 @@ productsRouter.post(
       name: Joi.string().required(),
       price: Joi.number().precision(2).required(),
       quantity: Joi.number().precision(2).required(),
-    }
+    },
   }),
-  productsController.create
+  productsController.create,
 );
 
 productsRouter.put(
@@ -36,9 +39,9 @@ productsRouter.put(
       name: Joi.string().required(),
       price: Joi.number().precision(2).required(),
       quantity: Joi.number().precision(2).required(),
-    }
+    },
   }),
-  productsController.update
+  productsController.update,
 );
 
 productsRouter.delete(
@@ -48,7 +51,7 @@ productsRouter.delete(
       id: Joi.string().uuid().required(),
     },
   }),
-  productsController.delete
+  productsController.delete,
 );
 
 export default productsRouter;

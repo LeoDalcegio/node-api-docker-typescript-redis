@@ -31,7 +31,7 @@ class SignInService {
       name: user.name,
     };
 
-    const token = jwt.sign(payload, String(process.env.JWT_SECRET), {
+    const token = jwt.sign(payload, String(process.env.API_JWT_SECRET), {
       subject: SIGNIN_ACCESS_TOKEN,
       expiresIn: '7d',
     });

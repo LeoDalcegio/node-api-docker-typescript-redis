@@ -13,13 +13,13 @@ import OrdersRepository from '../typeorm/repositories/OrderRepository';
 
 class CreateOrderService {
   public async execute(createOrderDto: CreateOrderDto): Promise<Order> {
-    const { customerId, products } = createOrderDto;
+    const { customer_id, products } = createOrderDto;
 
     const orderRepository = getCustomRepository(OrdersRepository);
     const customerRepository = getCustomRepository(CustomerRepository);
     const productRepository = getCustomRepository(ProductRepository);
 
-    const existentCustomer = await customerRepository.findOne(customerId);
+    const existentCustomer = await customerRepository.findOne(customer_id);
 
     if (!existentCustomer) {
       throw new AppError(CUSTOMER_NOT_FOUND);
@@ -56,24 +56,23 @@ class CreateOrderService {
     }
 
     const serializedProducts = products.map(product => ({
-      id: product.id,
+      product_id: product.id,
       quantity: product.quantity,
       price: productsFound.filter(p => p.id === product.id)[0].price,
     }));
 
     const order = await orderRepository.createOrder({
-      customerId: existentCustomer.id,
       customer: existentCustomer,
       products: serializedProducts,
     });
 
-    const { orderProducts } = order;
+    const { order_products } = order;
 
-    const updatedProductQuantity = orderProducts.map(product => ({
-      id: product.productId,
+    const updatedProductQuantity = order_products.map(order_product => ({
+      id: order_product.product_id,
       quantity:
-        productsFound.filter(p => p.id === product.id)[0].quantity -
-        product.quantity,
+        productsFound.filter(p => p.id === order_product.product_id)[0]
+          .quantity - order_product.quantity,
     }));
 
     await productRepository.save(updatedProductQuantity);

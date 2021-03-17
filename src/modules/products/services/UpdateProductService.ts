@@ -1,12 +1,20 @@
-import AppError from "@shared/errors/AppError";
-import { getCustomRepository } from "typeorm";
-import Product from "../typeorm/entities/Product";
-import ProductRepository from "../typeorm/repositories/ProductRepository";
-import { PRODUCT_NAME_CONFLICT, PRODUCT_NOT_FOUND } from "@shared/errors/Errors";
-import { UpdateProductDto } from "../dto/UpdateProductDto";
+import AppError from '@shared/errors/AppError';
+import { getCustomRepository } from 'typeorm';
+import Product from '../typeorm/entities/Product';
+import ProductRepository from '../typeorm/repositories/ProductRepository';
+import {
+  PRODUCT_NAME_CONFLICT,
+  PRODUCT_NOT_FOUND,
+} from '@shared/errors/Errors';
+import { UpdateProductDto } from '../dto/UpdateProductDto';
+import RedisCache from '@shared/providers/cache/RedisCache';
+import { API_VENDAS_PRODUCT_LIST } from '@shared/constants/redis-keys';
 
 class UpdateProductService {
-  public async execute(id: string, updateProductDto: UpdateProductDto): Promise<Product> {
+  public async execute(
+    id: string,
+    updateProductDto: UpdateProductDto,
+  ): Promise<Product> {
     const productRepository = getCustomRepository(ProductRepository);
 
     const product = await productRepository.findOne(id);
@@ -15,7 +23,9 @@ class UpdateProductService {
       throw new AppError(PRODUCT_NOT_FOUND);
     }
 
-    const productNameExists = await productRepository.findByName(updateProductDto.name);
+    const productNameExists = await productRepository.findByName(
+      updateProductDto.name,
+    );
 
     if (productNameExists) {
       throw new AppError(PRODUCT_NAME_CONFLICT);
@@ -25,9 +35,13 @@ class UpdateProductService {
     product.price = updateProductDto.price;
     product.quantity = updateProductDto.quantity;
 
+    const redisCache = new RedisCache();
+
+    await redisCache.invalidate(API_VENDAS_PRODUCT_LIST);
+
     await productRepository.save(product);
 
-    return product
+    return product;
   }
 }
 

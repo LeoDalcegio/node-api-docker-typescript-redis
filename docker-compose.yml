@@ -13,5 +13,18 @@ services:
       POSTGRES_PASSWORD: 'pass123'
       POSTGRES_DB: 'apivendas'
 
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+
+  redisinsight:
+    image: redislabs/redisinsight
+    ports:
+      - '8001:8001'
+    volumes:
+      - redisinsight:/var/lib/redisinsight/db
+
 volumes:
   database:
+  redisinsight:

@@ -41,6 +41,8 @@ class ResetPasswordService {
     user.salt = salt;
 
     await userRepository.save(user);
+
+    await userTokensRepository.remove(userToken);
   }
 }
 

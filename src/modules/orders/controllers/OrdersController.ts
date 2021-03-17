@@ -18,7 +18,7 @@ export default class OrdersController {
     const { customer_id, products } = request.body;
 
     const createOrderDto: CreateOrderDto = {
-      customerId: customer_id,
+      customer_id,
       products,
     };
 

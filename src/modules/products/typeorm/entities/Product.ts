@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -28,8 +29,8 @@ class Product {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToMany(() => OrderProduct, orderProduct => orderProduct.product)
-  orderProducts: OrderProduct[];
+  @OneToMany(() => OrderProduct, order_product => order_product.product)
+  order_products: OrderProduct[];
 }
 
 export default Product;

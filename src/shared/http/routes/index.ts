@@ -1,4 +1,5 @@
 import customersRouter from '@modules/customers/routes/customers.routes';
+import ordersRouter from '@modules/orders/routes/orders.routes';
 import productsRouter from '@modules/products/routes/products.routes';
 import authRouter from '@modules/users/routes/auth.routes';
 import passwordRouter from '@modules/users/routes/password.routes';
@@ -14,5 +15,6 @@ routes.use('/auth', authRouter);
 routes.use('/password', passwordRouter);
 routes.use('/profile', profileRouter);
 routes.use('/customers', customersRouter);
+routes.use('/orders', ordersRouter);
 
 export default routes;

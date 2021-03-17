@@ -21,11 +21,11 @@ class OrderProduct {
   @Column('decimal')
   price: number;
 
-  @Column({ name: 'order_id' })
-  orderId: string;
+  @Column()
+  order_id: string;
 
-  @Column({ name: 'product_id' })
-  productId: string;
+  @Column()
+  product_id: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -33,11 +33,11 @@ class OrderProduct {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @ManyToOne(() => Order, order => order.orderProducts)
+  @ManyToOne(() => Order, order => order.order_products)
   @JoinColumn({ name: 'order_id' })
   order: Order;
 
-  @ManyToOne(() => Product, product => product.orderProducts)
+  @ManyToOne(() => Product, product => product.order_products)
   @JoinColumn({ name: 'product_id' })
   product: Product;
 }

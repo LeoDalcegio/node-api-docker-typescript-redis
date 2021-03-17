@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { SignInDto } from '../dto/SignInDto';
 import SignInService from '../services/SignInService';
 import ISignInResponse from '../interfaces/ISignInResponse';
+import { classToClass } from 'class-transformer';
 
 export default class AuthController {
   public async signIn(request: Request, response: Response): Promise<Response> {
@@ -18,6 +19,6 @@ export default class AuthController {
       signInDto,
     );
 
-    return response.json(signInResponse);
+    return response.json(classToClass(signInResponse));
   }
 }
