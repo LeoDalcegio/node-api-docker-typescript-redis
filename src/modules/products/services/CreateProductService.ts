@@ -1,7 +1,7 @@
 import { API_VENDAS_PRODUCT_LIST } from '@shared/constants/redis-keys';
 import AppError from '@shared/errors/AppError';
 import { PRODUCT_NAME_CONFLICT } from '@shared/errors/Errors';
-import RedisCache from '@shared/providers/cache/RedisCache';
+import redisCache from '@shared/providers/cache/RedisCache';
 import { getCustomRepository } from 'typeorm';
 import { CreateProductDto } from '../dto/CreateProductDto';
 import Product from '../typeorm/entities/Product';
@@ -24,8 +24,6 @@ class CreateProductService {
       price: createProductDto.price,
       quantity: createProductDto.quantity,
     });
-
-    const redisCache = new RedisCache();
 
     await redisCache.invalidate(API_VENDAS_PRODUCT_LIST);
 

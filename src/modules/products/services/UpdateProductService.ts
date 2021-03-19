@@ -7,7 +7,7 @@ import {
   PRODUCT_NOT_FOUND,
 } from '@shared/errors/Errors';
 import { UpdateProductDto } from '../dto/UpdateProductDto';
-import RedisCache from '@shared/providers/cache/RedisCache';
+import redisCache from '@shared/providers/cache/RedisCache';
 import { API_VENDAS_PRODUCT_LIST } from '@shared/constants/redis-keys';
 
 class UpdateProductService {
@@ -34,8 +34,6 @@ class UpdateProductService {
     product.name = updateProductDto.name;
     product.price = updateProductDto.price;
     product.quantity = updateProductDto.quantity;
-
-    const redisCache = new RedisCache();
 
     await redisCache.invalidate(API_VENDAS_PRODUCT_LIST);
 
